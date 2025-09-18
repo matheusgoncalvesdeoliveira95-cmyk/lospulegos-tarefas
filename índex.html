@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calendário de Tarefas</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #f4f4f9;
+      margin: 0;
+      padding: 0;
+    }
+    h1 {
+      background: #ff4757;
+      color: white;
+      padding: 20px;
+      margin: 0;
+    }
+    #calendar {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 5px;
+      padding: 20px;
+    }
+    .day {
+      border: 1px solid #ccc;
+      padding: 20px;
+      min-height: 80px;
+      background: white;
+      cursor: pointer;
+      position: relative;
+    }
+    .day:hover {
+      background: #ffeaa7;
+    }
+    .task {
+      font-size: 12px;
+      background: #74b9ff;
+      color: white;
+      padding: 2px 5px;
+      margin: 2px 0;
+      border-radius: 3px;
+      display: block;
+    }
+    #taskInput {
+      margin: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>📅 Calendário de Tarefas</h1>
+  <div id="calendar"></div>
+
+  <div id="taskInput">
+    <input type="text" id="taskText" placeholder="Digite uma tarefa">
+    <button onclick="addTask()">Adicionar</button>
+  </div>
+
+  <script>
+    const calendar = document.getElementById("calendar");
+    const taskText = document.getElementById("taskText");
+    let selectedDay = null;
+
+    function createCalendar() {
+      const daysInMonth = 30;
+      for (let i = 1; i <= daysInMonth; i++) {
+        const dayDiv = document.createElement("div");
+        dayDiv.classList.add("day");
+        dayDiv.innerHTML = "<strong>" + i + "</strong>";
+        dayDiv.onclick = () => selectDay(dayDiv);
+        calendar.appendChild(dayDiv);
+      }
+    }
+
+    function selectDay(dayDiv) {
+      if (selectedDay) {
+        selectedDay.style.background = "white";
+      }
+      selectedDay = dayDiv;
+      selectedDay.style.background = "#dfe6e9";
+    }
+
+    function addTask() {
+      if (!selectedDay || taskText.value.trim() === "") return;
+      const task = document.createElement("span");
+      task.classList.add("task");
+      task.textContent = taskText.value;
+      selectedDay.appendChild(task);
+      taskText.value = "";
+    }
+
+    createCalendar();
+  </script>
+</body>
+</html>
